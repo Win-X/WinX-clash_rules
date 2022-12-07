@@ -1,0 +1,41 @@
+port: 7890
+socks-port: 7891
+mixed-port: 7892
+allow-lan: false
+mode: rule
+log-level: info
+ipv6: false
+external-controller: '127.0.0.1:9090'
+clash-for-android:
+    append-system-dns: false
+dns:
+    enable: true
+    listen: 0.0.0.0:53
+    ipv6: false
+    default-nameserver:{114.114.114.114,8.8.8.8}
+    enhanced-mode: fake-ip
+    fake-ip-range: 198.20.0.1/16
+    use-hosts: true
+    nameserver: ['https://doh.pub/dns-query', 'https://dns.cloudflare.com/dns-query']
+    fallback: ['https://dns.cloudflare.com/dns-query', 'tls://1.0.0.1:853', 'tls://dns.google:853']
+    fallback-filter: { geoip: true,geoip-code: CN}
+    
+rules:
+    - IP-CIDR,10.0.0.0/8,DIRECT
+    - IP-CIDR,100.64.0.0/10,DIRECT
+    - IP-CIDR,127.0.0.0/8,DIRECT
+    - IP-CIDR,172.16.0.0/12,DIRECT
+    - IP-CIDR,192.168.0.0/24,DIRECT
+    - IP-CIDR6,::/128,DIRECT
+    - IP-CIDR6,::1/128,DIRECT    
+    # - IP-CIDR6,::ffff:0:0/96,DIRECT
+    # - IP-CIDR6,100::/64,DIRECT        
+    # - IP-CIDR6,64:ff9b::/96,DIRECT    
+    # - IP-CIDR6,2001::/32,DIRECT    
+    # - IP-CIDR6,2001:20::/28,DIRECT    
+    # - IP-CIDR6,2001:db8::/32,DIRECT
+    # - IP-CIDR6,2002::/16,DIRECT        
+    - IP-CIDR6,fc00::/7,DIRECT
+    - IP-CIDR6,fe80::/10,DIRECT
+    - IP-CIDR6,ff00::/8,DIRECT
+    - GEOIP,CN,DIRECT
